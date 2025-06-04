@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>UTM 링크 생성기</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+      }
+      input,
+      button {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+      }
+      label {
+        margin-top: 20px;
+        display: block;
+        font-weight: bold;
+      }
+      #output {
+        margin-top: 20px;
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>UTM 링크 생성기</h2>
+
+    <label>기본 URL</label>
+    <input id="baseUrl" placeholder="https://yourdomain.com" />
+
+    <label>utm_source (출처)</label>
+    <input id="utmSource" placeholder="예: facebook, navercafe" />
+
+    <label>utm_medium (매체)</label>
+    <input id="utmMedium" placeholder="예: social, referral, video" />
+
+    <label>utm_campaign (캠페인 이름)</label>
+    <input id="utmCampaign" placeholder="예: awareness, tutorial" />
+
+    <label>utm_content (세부 링크 위치)</label>
+    <input id="utmContent" placeholder="예: post_link, banner_ad" />
+
+    <button onclick="generateUTMLink()">UTM 링크 생성</button>
+
+    <div id="output"></div>
+
+    <script>
+      function generateUTMLink() {
+        const baseUrl = document.getElementById("baseUrl").value.trim();
+        const utmSource = document.getElementById("utmSource").value.trim();
+        const utmMedium = document.getElementById("utmMedium").value.trim();
+        const utmCampaign = document.getElementById("utmCampaign").value.trim();
+        const utmContent = document.getElementById("utmContent").value.trim();
+
+        const url = new URL(baseUrl);
+        if (utmSource) url.searchParams.append("utm_source", utmSource);
+        if (utmMedium) url.searchParams.append("utm_medium", utmMedium);
+        if (utmCampaign) url.searchParams.append("utm_campaign", utmCampaign);
+        if (utmContent) url.searchParams.append("utm_content", utmContent);
+
+        document.getElementById("output").innerHTML = `
+        <strong>생성된 링크:</strong><br/>
+        <textarea rows="3" style="width:100%">${url.toString()}</textarea>
+      `;
+      }
+    </script>
+  </body>
+</html>
